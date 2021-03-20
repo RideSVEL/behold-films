@@ -1,0 +1,8 @@
+{
+  "name": "behold-films",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "8afb5241"
+}
