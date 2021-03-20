@@ -1,0 +1,13 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "behold-films",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}
