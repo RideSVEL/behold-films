@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="ion-no-padding">
+    <ion-menu-toggle auto-hide="false">
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="assets/icon/favicon.png">
+        </ion-avatar>
+        <ion-title>Behold Films</ion-title>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list class="menu" lines="none">
+    <ion-menu-toggle auto-hide="false">
+      <ion-item (click)="navigateToStatistics()" class="menu__item" lines="full" button detail="true">
+        <ion-icon name="stats-chart" slot="start" size="small"></ion-icon>
+        <ion-label class="change-font">Statistics</ion-label>
+      </ion-item>
+      <ion-item (click)="navigateToUsers()" class="menu__item" lines="full" button detail="true">
+        <ion-icon name="people" slot="start" size="small"></ion-icon>
+        <ion-label class="change-font">Users</ion-label>
+      </ion-item>
+      <ion-item (click)="navigateToMessages()" class="menu__item" lines="full" button detail="true">
+        <ion-icon name="chatbox-ellipses" slot="start" size="small"></ion-icon>
+        <ion-label class="change-font">Message</ion-label>
+      </ion-item>
+      <ion-item (click)="navigateToReview()" class="menu__item" lines="full" button detail="true">
+        <ion-icon name="infinite" slot="start" size="small"></ion-icon>
+        <ion-label class="change-font">Reviews</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle auto-hide="false">
+      <ion-button (click)="message()" class="menu__logout" color="primary" fill="clear">
+        Log Out
+      </ion-button>
+    </ion-menu-toggle>
+  </ion-list>
+</ion-content>

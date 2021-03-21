@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "behold-films",
+  "appId": "serejka.telegram.bot",
+  "appName": "behold-films-console",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

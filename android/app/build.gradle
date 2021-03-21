@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion targetSdkVersion
     defaultConfig {
-        applicationId "io.ionic.starter"
+        applicationId "serejka.telegram.bot"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

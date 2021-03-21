@@ -1,0 +1,29 @@
+.menu {
+  height: 100%;
+
+  &__item {
+    vertical-align: center;
+    margin: 0 var(--spacing-1);
+  }
+
+  &__item {
+    margin: 0 var(--spacing-1);
+    font-size: 14px;
+  }
+
+  &__logout {
+    position: absolute;
+    margin: 0;
+    padding-top: var(--spacing-1);
+    bottom: 10%;
+    right: 5%;
+    font-size: 16px;
+    text-transform: none;
+  }
+}
+
+//.change-font {
+//  font-family: "Century Gothic", fantasy;
+//}
+
+

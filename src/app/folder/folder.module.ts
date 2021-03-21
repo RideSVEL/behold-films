@@ -5,16 +5,19 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { FolderPageRoutingModule } from './folder-routing.module';
+import {ConsoleComponent} from './console/console.component';
+import {MenuModule} from '../menu/menu.module';
 
-import { FolderPage } from './folder.page';
+
 
 @NgModule({
+  declarations: [ConsoleComponent],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FolderPageRoutingModule
+    FolderPageRoutingModule,
+    MenuModule
   ],
-  declarations: [FolderPage]
 })
 export class FolderPageModule {}
