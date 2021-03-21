@@ -1,7 +1,8 @@
 {
   "name": "behold-films",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }
