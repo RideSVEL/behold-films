@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {StatisticService} from '../../services/statistic.service';
+import {Stats} from '../../model/stats';
 
 @Component({
   selector: 'app-commands',
@@ -7,8 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommandsComponent implements OnInit {
 
-  constructor() { }
+  statistic: Stats[];
+
+  constructor(private statisticService: StatisticService) { }
 
   ngOnInit() {}
+
+  ionViewWillEnter(): void {
+    this.statisticService.findAll().subscribe(data => {
+      this.statistic = data.reverse();
+      console.log(this.statistic);
+    });
+  }
+
 
 }
