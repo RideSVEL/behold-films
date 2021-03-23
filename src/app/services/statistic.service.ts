@@ -1,19 +1,20 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {Stats} from '../model/stats';
+import {ApiService} from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StatisticService {
-  readonly api = environment.apiUrl;
+export class StatisticService extends ApiService {
 
-  constructor(private client: HttpClient) { }
+  constructor(protected client: HttpClient) {
+    super(client);
+  }
 
-  public findAll(): Observable<Stats[]> {
-    return this.client.get<Stats[]>(this.api + 'statistics');
+  public findAllCommands(): Observable<Stats[]> {
+    return this.get('statistics');
   }
 
 }

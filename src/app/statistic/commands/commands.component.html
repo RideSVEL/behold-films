@@ -1,6 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Command Statistic</ion-title>
+    <ion-badge slot="end" color="warning" class="badge-left">{{statistic.length}}</ion-badge>
     <ion-buttons slot="start">
       <ion-menu-toggle>
         <ion-button color="dark">
@@ -11,5 +12,17 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <p>Commands works</p>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      refreshing-spinner="dots"
+      pullingText="Pull to refresh"
+      refreshingText="Refreshing..."></ion-refresher-content>
+  </ion-refresher>
+  <ion-list class="list">
+    <ion-item *ngFor="let stat of statistic">
+      <ion-label class="label">{{stat.commandName}}</ion-label>
+      <ion-note color="warning" slot="end">{{stat.count}}</ion-note>
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -1,6 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>List Users</ion-title>
+    <ion-badge slot="end" color="warning" class="badge-left">{{users.length}}</ion-badge>
     <ion-buttons slot="start">
       <ion-menu-toggle>
         <ion-button color="dark">
@@ -11,5 +12,28 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <p>Users works</p>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      refreshing-spinner="dots"
+      pullingText="Pull to refresh"
+      refreshingText="Refreshing..."></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item *ngFor="let user of users">
+      <ion-label>{{user.id}}</ion-label>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <ion-label>{{user.firstName}}</ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

@@ -9,18 +9,28 @@ import {Stats} from '../../model/stats';
 })
 export class CommandsComponent implements OnInit {
 
-  statistic: Stats[];
+  statistic: Stats[] = [];
 
   constructor(private statisticService: StatisticService) { }
 
   ngOnInit() {}
 
   ionViewWillEnter(): void {
-    this.statisticService.findAll().subscribe(data => {
+    this.getAllCommandsStats();
+  }
+
+  getAllCommandsStats(): void {
+    this.statisticService.findAllCommands().subscribe(data => {
       this.statistic = data.reverse();
-      console.log(this.statistic);
     });
   }
 
+
+  doRefresh($event: any) {
+    this.getAllCommandsStats();
+    setTimeout(() => {
+      $event.target.complete();
+    }, 1000);
+  }
 
 }
