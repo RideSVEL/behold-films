@@ -1,7 +1,42 @@
-.list {
-  height: 100%;
-}
 
 .badge-left {
   margin-right: 10px;
+}
+
+.list {
+  height: 100%;
+
+  &__items {
+    padding-top: 0;
+  }
+
+  &__toolbar ion-button {
+    height: 30px;
+  }
+
+  &__toolbar ion-icon {
+    font-size: 20px;
+  }
+
+  &__actions {
+    --padding-start: 0;
+    --min-height: 50px;
+  }
+
+  &__actions &__size {
+    padding-left: 10px;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  &__actions &__options {
+    height: calc(var(--base-size) * 4);
+    font-size: 12px;
+  }
+
+  &__actions &__options ion-text {
+    font-size: 12px !important;
+    line-height: 18px;
+  }
+
 }

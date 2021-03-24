@@ -23,9 +23,6 @@ export class ListComponent implements OnInit {
   getAdditionalUsersToArray(id: number): void {
     this.userService.findAllUsersById(id).subscribe(data => {
       this.users = this.users.concat(data);
-      if (data.length < 10) {
-        this.disableLoadData = true;
-      }
     });
   }
 
@@ -34,7 +31,8 @@ export class ListComponent implements OnInit {
       this.getAdditionalUsersToArray(this.users[this.users.length - 1].id);
       $event.target.complete();
 
-      if (this.disableLoadData) {
+      if (this.users.length % 10 !== 0) {
+        this.disableLoadData = true;
         $event.target.disabled = true;
       }
     }, 500);
@@ -45,5 +43,9 @@ export class ListComponent implements OnInit {
     setTimeout(() => {
       $event.target.complete();
     }, 500);
+  }
+
+  showOptions() {
+
   }
 }

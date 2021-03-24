@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>List Users</ion-title>
-    <ion-badge slot="end" color="warning" class="badge-left">{{users.length}}</ion-badge>
+    <ion-badge slot="end" color="tertiary" class="badge-left">{{users.length}}</ion-badge>
     <ion-buttons slot="start">
       <ion-menu-toggle>
         <ion-button color="dark">
@@ -12,23 +12,26 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher *ngIf="disableLoadData" slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
       pullingIcon="chevron-down-circle-outline"
       refreshing-spinner="dots"
       pullingText="Pull to refresh"
       refreshingText="Refreshing..."></ion-refresher-content>
   </ion-refresher>
-  <ion-list>
-    <ion-item *ngFor="let user of users">
-      <ion-label>{{user.id}}</ion-label>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <ion-label>{{user.firstName}}</ion-label>
-    </ion-item>
+  <ion-toolbar class="list__actions">
+    <ion-label class="list__size" slot="start">
+      {{users.length}} Users
+    </ion-label>
+    <ion-buttons slot="end">
+      <ion-button (click)="showOptions()" class="list__options" color="dark" fill="clear">
+        <ion-icon slot="start" size="small" name="options"></ion-icon>
+        <ion-text>Options</ion-text>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-list class="list__items">
+    <app-user-item *ngFor="let user of users" [user]="user"></app-user-item>
   </ion-list>
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content

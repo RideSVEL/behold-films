@@ -17,7 +17,7 @@ export class UsersService extends ApiService {
     return this.get('users');
   }
 
-  public findAllUsersById(id: number): Observable<User[]> {
-    return this.get('users/' + id);
+  public findAllUsersById(fromId: number): Observable<User[]> {
+    return this.get('users/' + fromId);
   }
 }

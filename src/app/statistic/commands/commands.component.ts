@@ -33,4 +33,7 @@ export class CommandsComponent implements OnInit {
     }, 1000);
   }
 
+  showOptions() {
+
+  }
 }

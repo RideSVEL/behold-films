@@ -1,0 +1,45 @@
+.item {
+  .item__summary {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+  }
+
+  &__status-circle {
+    margin-right: var(--spacing-2);
+    font-size: 18px;
+  }
+
+  &__name {
+    font-size: 15px;
+  }
+
+  &__state {
+    margin-left: var(--spacing-hf);
+    font-size: 11px;
+    color: var(--ion-color-medium);
+    padding-left: 4px;
+  }
+
+  &__status {
+    font-weight: bold;
+  }
+
+  &__info-divider {
+    margin: 0 var(--spacing-1);
+  }
+
+  &__spinner {
+    margin-right: calc(var(--spacing-qt) + var(--spacing-hf));
+  }
+
+  &__text {
+    font-size: 13px;
+  }
+
+  // Android
+  &.md {
+    --inner-padding-end: var(--spacing-hf);
+  }
+
+}

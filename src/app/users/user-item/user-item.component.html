@@ -1,0 +1,27 @@
+<ion-item lines="full" button detail="false" class="item">
+  <ion-icon class="item__status-circle"
+            slot="start" [color]="getUserColorByQuantity()"
+            name="ellipse"></ion-icon>
+  <ion-label class="ion-text-wrap item__summary item__text">
+    <ion-text>
+      <span class="item__name">{{user.firstName + ' ' + getUserLastName()}}</span>
+      <span class="item__state">{{user.userName}}</span>
+    </ion-text>
+    <ion-text class="item__details">
+      <span class="item__text">Chat Id</span>
+      <span class="item__info-divider"> | </span>
+      <span class="item__text">{{user.userId}}</span>
+    </ion-text>
+    <ion-text>
+      <span class="item__text">Using: </span>
+      <ion-text class="item__status item__text" [color]="getUserColorByQuantity()">
+        {{user.countOfUse}}
+      </ion-text>
+    </ion-text>
+  </ion-label>
+  <ion-buttons slot="end">
+    <ion-button (click)="showUserActions(user)" class="item__actions" color="dark" fill="clear">
+      <ion-icon ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-item>
