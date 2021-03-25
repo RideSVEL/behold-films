@@ -6,14 +6,12 @@
   "webDir": "www",
   "plugins": {
     "SplashScreen": {
-      "showSpinner": true,
       "splashFullScreen": true,
       "launchAutoHide": true,
-      "launchShowDuration": 3000,
+      "launchShowDuration": 2000,
       "backgroundColor": "#ffffffff",
       "androidSplashResourceName": "splash",
       "androidScaleType": "CENTER_CROP",
-      "androidSpinnerStyle": "large",
       "splashImmersive": true
     }
   },
