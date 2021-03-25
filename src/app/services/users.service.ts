@@ -20,4 +20,13 @@ export class UsersService extends ApiService {
   public findAllUsersById(fromId: number): Observable<User[]> {
     return this.get('users/' + fromId);
   }
+
+  public findAllUsersPages(page: number, count: number, sort: string, direction: number): Observable<User[]> {
+    return this.get('users/' + page + '/' + count + '/' + sort + '/' + direction);
+  }
+
+  public countUsers(): Observable<number> {
+    return this.get('users/count');
+  }
+
 }

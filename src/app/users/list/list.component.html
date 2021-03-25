@@ -1,7 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>List Users</ion-title>
-    <ion-badge slot="end" color="tertiary" class="badge-left">{{users.length}}</ion-badge>
+    <ion-badge slot="end" color="tertiary" class="badge-left">{{countUsers}}</ion-badge>
+    <ion-button (click)="showSearch()" slot="end" fill="clear">
+      <ion-icon name="search"></ion-icon>
+    </ion-button>
     <ion-buttons slot="start">
       <ion-menu-toggle>
         <ion-button color="dark">
@@ -12,7 +15,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-refresher *ngIf="disableLoadData" slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
       pullingIcon="chevron-down-circle-outline"
       refreshing-spinner="dots"
@@ -33,7 +36,7 @@
   <ion-list class="list__items">
     <app-user-item *ngFor="let user of users" [user]="user"></app-user-item>
   </ion-list>
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+  <ion-infinite-scroll *ngIf="!disableLoadData" threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
       loadingText="Loading more data...">

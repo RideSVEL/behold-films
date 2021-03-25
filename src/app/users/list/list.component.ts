@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UsersService} from '../../services/users.service';
 import {User} from '../../model/user';
+import {PickerController} from '@ionic/angular';
 
 @Component({
   selector: 'app-list',
@@ -8,44 +9,117 @@ import {User} from '../../model/user';
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
-  readonly startId = 0;
+
+  constructor(public userService: UsersService, private picker: PickerController) {
+  }
+
   disableLoadData = false;
 
   users: User[] = [];
+  direction = 0;
+  sortBy = 'id';
+  countUsers = 0;
 
-  constructor(private userService: UsersService) {
-  }
+  readonly fields = new Map([
+    ['Standard', 'id'],
+    ['Firstname', 'firstName'],
+    ['Count of using', 'countOfUse'],
+    ['Lastname', 'lastName'],
+    ['Username', 'userName'],
+  ]);
+
+  readonly dir = new Map([
+    ['Ascending', 0],
+    ['Descending', 1]
+  ]);
 
   ngOnInit() {
-    this.getAdditionalUsersToArray(this.startId);
+    this.getAdditionalUsersToArray();
   }
 
-  getAdditionalUsersToArray(id: number): void {
-    this.userService.findAllUsersById(id).subscribe(data => {
-      this.users = this.users.concat(data);
-    });
+  ionViewWillEnter() {
+    this.updateCounter();
+  }
+
+  updateCounter() {
+    this.userService.countUsers().subscribe(data => this.countUsers = data);
+  }
+
+  getAdditionalUsersToArray(count: number = 10): void {
+    this.userService.findAllUsersPages(this.users.length / 10, count, this.sortBy, this.direction)
+      .subscribe(data => {
+        this.users = this.users.concat(data);
+        this.disableLoadData = data.length % 10 !== 0 || data.length === 0;
+      });
   }
 
   loadData($event: any) {
     setTimeout(() => {
-      this.getAdditionalUsersToArray(this.users[this.users.length - 1].id);
+      this.getAdditionalUsersToArray();
       $event.target.complete();
-
-      if (this.users.length % 10 !== 0) {
-        this.disableLoadData = true;
-        $event.target.disabled = true;
-      }
     }, 500);
   }
 
   doRefresh($event: any) {
-    this.getAdditionalUsersToArray(this.users[this.users.length - 1].id);
+    this.refreshUsers();
     setTimeout(() => {
       $event.target.complete();
-    }, 500);
+    }, 600);
   }
 
-  showOptions() {
+  private refreshUsers(): void {
+    this.updateCounter();
+    this.users = [];
+    this.getAdditionalUsersToArray();
+  }
+
+  async showOptions() {
+    const pickerElement = await this.picker.create({
+      columns: this.getColumns(),
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Confirm',
+          handler: (value) => {
+            if (this.sortBy !== value.col1.value || this.direction !== value.col2.value) {
+              this.sortBy = value.col1.value;
+              this.direction = value.col2.value;
+              this.refreshUsers();
+            }
+          }
+        }
+      ]
+    });
+    await pickerElement.present();
+  }
+
+  private getColumns() {
+    return [{
+      name: `col1`,
+      options: this.getColumnOptions()
+    }, {
+      name: `col2`,
+      options: this.getColumnOptions(1)
+    }];
+  }
+
+  private getColumnOptions(col = 0) {
+    const keys = col === 0 ? this.fields.keys() : this.dir.keys();
+    const map = col === 0 ? this.fields : this.dir;
+    const options = [];
+    for (const temp of keys) {
+      options.push({
+        text: temp,
+        value: map.get(temp)
+      });
+    }
+    return options;
+  }
+
+  showSearch() {
 
   }
 }
