@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Review} from '../../model/review';
+import {ReviewsService} from '../../services/reviews.service';
 
 @Component({
   selector: 'app-reviews',
@@ -7,8 +9,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReviewsComponent implements OnInit {
 
-  constructor() { }
+  newReviews = true;
+  reviews: Review[] = [];
 
-  ngOnInit() {}
+  constructor(private reviewService: ReviewsService) {
+  }
 
+  ngOnInit() {
+    this.updateOnNewReviews();
+  }
+
+  segmentChanged($event: any) {
+    if ($event.detail.value === 'archive') {
+      this.updateOnArchiveReviews();
+    } else if ($event.detail.value === 'new') {
+      this.updateOnNewReviews();
+    }
+  }
+
+  updateOnNewReviews(): void {
+    this.reviewService.findNewReviews().subscribe(data => {
+      this.reviews = data;
+    });
+  }
+
+  updateOnArchiveReviews(): void {
+    this.reviewService.findArchiveReviews().subscribe(data => {
+      this.reviews = data;
+    });
+  }
 }

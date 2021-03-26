@@ -11,5 +11,12 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <p>Reviews works</p>
+  <ion-segment (ionChange)="segmentChanged($event)" value="new">
+    <ion-segment-button value="new">
+      <ion-label>New</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="archive">
+      <ion-label>Archive</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 </ion-content>

@@ -1,9 +1,23 @@
 import { Injectable } from '@angular/core';
+import {ApiService} from './api.service';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Review} from '../model/review';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ReviewsService {
+export class ReviewsService extends ApiService{
 
-  constructor() { }
+  constructor(client: HttpClient) {
+    super(client);
+  }
+
+  findNewReviews(): Observable<Review[]> {
+    return this.get('review/new');
+  }
+
+  findArchiveReviews(): Observable<Review[]> {
+    return this.get('review/archive');
+  }
 }
