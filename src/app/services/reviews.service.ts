@@ -20,4 +20,12 @@ export class ReviewsService extends ApiService{
   findArchiveReviews(): Observable<Review[]> {
     return this.get('review/archive');
   }
+
+  deleteReview(review: Review) {
+    return this.post('review/delete', review);
+  }
+
+  update(review: Review) {
+    return this.post('review', review);
+  }
 }

@@ -15,9 +15,14 @@ export class ApiService {
     headers: this.headers
   };
 
-  constructor(protected client: HttpClient) {}
+  constructor(protected client: HttpClient) {
+  }
 
   get<T>(endpoint: string): Observable<T> {
     return this.client.get<T>(this.api + endpoint, this.httpOptions);
+  }
+
+  post<T>(endpoint: string, body: any): Observable<T> {
+    return this.client.post<T>(this.api + endpoint, body, this.httpOptions);
   }
 }
