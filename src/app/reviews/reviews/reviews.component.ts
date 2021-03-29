@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Review} from '../../model/review';
 import {ReviewsService} from '../../services/reviews.service';
-import {ToastController} from '@ionic/angular';
+import {AlertController, ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-reviews',
@@ -12,12 +12,18 @@ export class ReviewsComponent implements OnInit {
 
   reviews: Review[] = [];
   newReviews = false;
+  summaryCount = 0;
 
-  constructor(private reviewService: ReviewsService, private toastController: ToastController) {
+  constructor(public reviewService: ReviewsService, private toastController: ToastController,
+              public alertController: AlertController) {
   }
 
   ngOnInit() {
     this.updateOnNewReviews();
+  }
+
+  ionViewWillEnter() {
+    this.updateAllCounts();
   }
 
   segmentChanged($event: any) {
@@ -81,7 +87,17 @@ export class ReviewsComponent implements OnInit {
   deleteReview(review: Review) {
     this.reviewService.deleteReview(review).subscribe(() => {
       this.showSuccessToast().then(() => this.reviews.splice(this.reviews.indexOf(review), 1));
+      this.updateAllCounts();
     });
+  }
+
+  updateCounter() {
+    this.reviewService.count().subscribe(data => this.summaryCount = data);
+  }
+
+  private updateAllCounts() {
+    this.updateCounter();
+    this.reviewService.updateCounterNewReviews();
   }
 
   private async showSuccessToast(): Promise<void> {
@@ -92,4 +108,39 @@ export class ReviewsComponent implements OnInit {
     });
     await toast.present();
   }
+
+  doRefresh($event: any) {
+    this.updateAllCounts();
+    this.newReviews ? this.updateOnNewReviews() : this.updateOnArchiveReviews();
+    setTimeout(() => {
+      $event.target.complete();
+    }, 600);
+  }
+
+  async presentAlertConfirm(review: Review) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm deleting',
+      message: 'Do you confirm the removal of the review? This action cannot be undone.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Delete',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.deleteReview(review);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 }

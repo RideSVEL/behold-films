@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Command Statistic</ion-title>
-    <ion-badge slot="end" color="danger" class="badge-left">{{statistic.length}}</ion-badge>
+    <ion-badge slot="end" color="danger" class="badge-left">{{commands.length}}</ion-badge>
     <ion-buttons slot="start">
       <ion-menu-toggle>
         <ion-button color="dark">
@@ -21,7 +21,7 @@
   </ion-refresher>
   <ion-toolbar class="list__actions">
     <ion-label class="list__size" slot="start">
-      {{statistic.length}} Commands
+      {{commands.length}} Commands
     </ion-label>
     <ion-buttons slot="end">
       <ion-button (click)="showOptions()" class="list__options" color="dark" fill="clear">
@@ -31,7 +31,7 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-list class="list">
-    <ion-item *ngFor="let stat of statistic">
+    <ion-item *ngFor="let stat of commands">
       <ion-label class="label">{{stat.commandName}}</ion-label>
       <ion-note color="danger" slot="end">{{stat.count}}</ion-note>
     </ion-item>

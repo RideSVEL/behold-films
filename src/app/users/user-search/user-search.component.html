@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar class="modal-title search__toolbar">
+    <ion-searchbar (ionCancel)="closeSearch()"
+                   (ionChange)="search($event.target.value.trim())"
+                   placeholder="Search user"
+                   debounce="300"
+                   [value]="searchLine"
+                   showCancelButton="always"
+                   cancelButtonIcon="chevron-back-outline">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <app-user-item *ngFor="let user of users" [user]="user"></app-user-item>
+  </ion-list>
+</ion-content>

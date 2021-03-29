@@ -32,6 +32,7 @@
       <ion-item  (click)="navigateToReview()" class="menu__item" lines="full" button detail="true">
         <ion-icon color="success" name="infinite" slot="start" size="small"></ion-icon>
         <ion-label class="change-font">Reviews</ion-label>
+        <ion-badge slot="end" color="primary" class="badge-left">{{reviewService.countNewReviews}}</ion-badge>
       </ion-item>
     </ion-menu-toggle>
     <ion-menu-toggle auto-hide="false">

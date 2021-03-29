@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {StatisticService} from '../../services/statistic.service';
 import {Stats} from '../../model/stats';
+import {PickerController} from '@ionic/angular';
 
 @Component({
   selector: 'app-commands',
@@ -9,9 +10,15 @@ import {Stats} from '../../model/stats';
 })
 export class CommandsComponent implements OnInit {
 
-  statistic: Stats[] = [];
+  commands: Stats[] = [];
+  direction = 0;
 
-  constructor(private statisticService: StatisticService) { }
+  readonly dir = new Map([
+    ['Ascending', 0],
+    ['Descending', 1]
+  ]);
+
+  constructor(private statisticService: StatisticService, private picker: PickerController) { }
 
   ngOnInit() {}
 
@@ -21,7 +28,7 @@ export class CommandsComponent implements OnInit {
 
   getAllCommandsStats(): void {
     this.statisticService.findAllCommands().subscribe(data => {
-      this.statistic = data.reverse();
+      this.commands = this.direction === 0 ? data : data.reverse();
     });
   }
 
@@ -33,8 +40,44 @@ export class CommandsComponent implements OnInit {
     }, 1000);
   }
 
-  showOptions() {
+  async showOptions() {
+    const pickerElement = await this.picker.create({
+      columns: this.getColumns(),
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Confirm',
+          handler: (value) => {
+            if (this.direction !== value.col1.value) {
+              this.direction = value.col1.value;
+              this.getAllCommandsStats();
+            }
+          }
+        }
+      ]
+    });
+    await pickerElement.present();
+  }
 
+  private getColumns() {
+    return [{
+      name: `col1`,
+      options: this.getColumnOptions()
+    }];
+  }
+
+  private getColumnOptions() {
+    const options = [];
+    for (const temp of this.dir.keys()) {
+      options.push({
+        text: temp,
+        value: this.dir.get(temp)
+      });
+    }
+    return options;
   }
 
 }

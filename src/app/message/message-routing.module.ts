@@ -6,15 +6,11 @@ import {MessageComponent} from './message/message.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'all',
+    redirectTo: 'sending',
     pathMatch: 'full'
   },
   {
-    path: 'all',
-    component: MessageComponent
-  },
-  {
-    path: ':id',
+    path: 'sending',
     component: MessageComponent
   }
 ];

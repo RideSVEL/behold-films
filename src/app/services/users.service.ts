@@ -17,6 +17,10 @@ export class UsersService extends ApiService {
     return this.get('users');
   }
 
+  public searchUsersByLine(line: string): Observable<User[]> {
+    return this.get('users/search?searchText=' + line);
+  }
+
   public findAllUsersById(fromId: number): Observable<User[]> {
     return this.get('users/' + fromId);
   }
@@ -27,6 +31,10 @@ export class UsersService extends ApiService {
 
   public countUsers(): Observable<number> {
     return this.get('users/count');
+  }
+
+  public findUserById(id: number): Observable<User> {
+    return this.get('users/' + id);
   }
 
 }

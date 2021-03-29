@@ -11,5 +11,18 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <p>Messages works</p>
+  <ion-item color="tertiary" *ngIf="recipient">
+    <ion-label align="center">
+      RECIPIENT: <span>{{user.firstName}}</span>
+    </ion-label>
+  </ion-item>
+  <ion-item color="success" *ngIf="!recipient">
+    <ion-label align="center">
+      MESSAGE TO ALL USERS
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Your Message</ion-label>
+    <ion-textarea rows="20" cols="20" placeholder="Type your message here..."></ion-textarea>
+  </ion-item>
 </ion-content>

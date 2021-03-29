@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UsersService} from '../../services/users.service';
 import {User} from '../../model/user';
-import {PickerController} from '@ionic/angular';
+import {ModalController, PickerController} from '@ionic/angular';
+import {UserSearchComponent} from '../user-search/user-search.component';
 
 @Component({
   selector: 'app-list',
@@ -10,7 +11,8 @@ import {PickerController} from '@ionic/angular';
 })
 export class ListComponent implements OnInit {
 
-  constructor(public userService: UsersService, private picker: PickerController) {
+  constructor(public userService: UsersService, private picker: PickerController,
+              private modal: ModalController) {
   }
 
   disableLoadData = false;
@@ -57,7 +59,7 @@ export class ListComponent implements OnInit {
     setTimeout(() => {
       this.getAdditionalUsersToArray();
       $event.target.complete();
-    }, 500);
+    }, 600);
   }
 
   doRefresh($event: any) {
@@ -119,7 +121,10 @@ export class ListComponent implements OnInit {
     return options;
   }
 
-  showSearch() {
-
+  async showSearch() {
+    const modal = await this.modal.create({
+      component: UserSearchComponent
+    });
+    return modal.present();
   }
 }

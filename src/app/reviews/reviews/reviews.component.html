@@ -1,6 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Reviews</ion-title>
+    <ion-badge slot="end" color="success" class="badge-left">{{summaryCount}}</ion-badge>
     <ion-buttons slot="start">
       <ion-menu-toggle>
         <ion-button color="dark">
@@ -13,36 +14,47 @@
 <ion-content>
   <ion-segment (ionChange)="segmentChanged($event)" value="new">
     <ion-segment-button value="new">
-      <ion-label>New</ion-label>
+      <ion-label>New
+        <ion-badge slot="end" color="primary">{{reviewService.countNewReviews}}</ion-badge>
+      </ion-label>
     </ion-segment-button>
     <ion-segment-button value="archive">
       <ion-label>Archive</ion-label>
     </ion-segment-button>
   </ion-segment>
-  <ion-item-sliding *ngFor="let review of reviews">
-    <ion-item button (click)="showReviewInfo()">
-      <ion-label>
-        <h3>{{getReviewDate(review)}}</h3>
-        <p>{{review.review}}</p>
-      </ion-label>
-      <ion-note slot="end">
-        {{getReviewTime(review)}}
-      </ion-note>
-    </ion-item>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      refreshing-spinner="dots"
+      pullingText="Pull to refresh"
+      refreshingText="Refreshing..."></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item-sliding *ngFor="let review of reviews">
+      <ion-item button (click)="showReviewInfo()">
+        <ion-label>
+          <h3>{{getReviewDate(review)}}</h3>
+          <p>{{review.review}}</p>
+        </ion-label>
+        <ion-note slot="end">
+          {{getReviewTime(review)}}
+        </ion-note>
+      </ion-item>
 
-    <ion-item-options side="start">
-      <ion-item-option (click)="readReview(review)" *ngIf="newReviews" color="success">
-        <ion-icon slot="icon-only" name="checkmark-done-sharp"></ion-icon>
-      </ion-item-option>
-      <ion-item-option (click)="unreadReview(review)" *ngIf="!newReviews" color="tertiary">
-        <ion-icon slot="icon-only" name="chevron-up-circle-sharp"></ion-icon>
-      </ion-item-option>
-    </ion-item-options>
+      <ion-item-options side="start">
+        <ion-item-option (click)="readReview(review)" *ngIf="newReviews" color="success">
+          <ion-icon slot="icon-only" name="checkmark-done-sharp"></ion-icon>
+        </ion-item-option>
+        <ion-item-option (click)="unreadReview(review)" *ngIf="!newReviews" color="tertiary">
+          <ion-icon slot="icon-only" name="chevron-up-circle-sharp"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
 
-    <ion-item-options side="end">
-      <ion-item-option (click)="deleteReview(review)" color="danger">
-        <ion-icon slot="icon-only" name="trash"></ion-icon>
-      </ion-item-option>
-    </ion-item-options>
-  </ion-item-sliding>
+      <ion-item-options side="end">
+        <ion-item-option (click)="presentAlertConfirm(review)" color="danger">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>

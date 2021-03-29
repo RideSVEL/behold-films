@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import {ReviewsService} from '../../services/reviews.service';
 
 @Component({
   selector: 'app-list',
@@ -8,9 +9,13 @@ import {Router} from '@angular/router';
 })
 export class ListComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, public reviewService: ReviewsService) { }
 
   ngOnInit() {}
+
+  ionViewWillEnter() {
+    this.reviewService.updateCounterNewReviews();
+  }
 
   message() {
     console.log('click');
