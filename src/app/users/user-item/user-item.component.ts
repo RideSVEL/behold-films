@@ -1,5 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../../model/user';
+import {PopoverController} from '@ionic/angular';
+import {UserPopoverItemComponent} from '../user-popover-item/user-popover-item.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-item',
@@ -10,10 +13,20 @@ export class UserItemComponent implements OnInit {
 
   @Input() user: User;
 
-  constructor() {
+  constructor(private popoverController: PopoverController, private router: Router) {
   }
 
   ngOnInit() {
+  }
+
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: UserPopoverItemComponent,
+      cssClass: 'my-custom-class',
+      event: ev,
+      translucent: true
+    });
+    return await popover.present();
   }
 
   getUserLastName(): string {
@@ -33,7 +46,7 @@ export class UserItemComponent implements OnInit {
   }
 
 
-  showUserActions(user: User) {
-
+  showUserActions() {
+    this.router.navigate(['console/message/sending'], { queryParams: { recipient: this.user.userId } }).then();
   }
 }

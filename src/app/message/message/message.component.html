@@ -13,7 +13,7 @@
 <ion-content>
   <ion-item color="tertiary" *ngIf="recipient">
     <ion-label align="center">
-      RECIPIENT: <span>{{user.firstName}}</span>
+      RECIPIENT: <span>{{user.firstName ? user.firstName : 'Loading...'}}</span>
     </ion-label>
   </ion-item>
   <ion-item color="success" *ngIf="!recipient">
@@ -25,4 +25,9 @@
     <ion-label position="floating">Your Message</ion-label>
     <ion-textarea rows="20" cols="20" placeholder="Type your message here..."></ion-textarea>
   </ion-item>
+    <section>
+      <header>CONFIRM ACTION</header>
+      <ion-button (click)="redirectToUsers()" fill="outline" color="tertiary" expand="block">Cancel</ion-button>
+      <ion-button (click)="sendMessage()" style="margin-top: 10px" color="success" expand="block">Confirm</ion-button>
+    </section>
 </ion-content>
