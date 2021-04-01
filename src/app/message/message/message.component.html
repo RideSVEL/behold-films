@@ -1,13 +1,18 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>Message</ion-title>
-    <ion-buttons slot="start">
+    <ion-buttons *ngIf="recipient" slot="start">
+      <ion-button (click)="navigateBack()" shape="round" fill="clear" slot="icon-only">
+        <ion-icon name="chevron-back-outline" size="small"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons *ngIf="!recipient" slot="start">
       <ion-menu-toggle>
         <ion-button color="dark">
           <ion-icon slot="icon-only" name="menu"></ion-icon>
         </ion-button>
       </ion-menu-toggle>
     </ion-buttons>
+    <ion-title>Message</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -23,11 +28,13 @@
   </ion-item>
   <ion-item>
     <ion-label position="floating">Your Message</ion-label>
-    <ion-textarea rows="20" cols="20" placeholder="Type your message here..."></ion-textarea>
+    <ion-textarea [(ngModel)]="messageText" rows="20" cols="20" placeholder="Type your message here..."></ion-textarea>
   </ion-item>
     <section>
       <header>CONFIRM ACTION</header>
       <ion-button (click)="redirectToUsers()" fill="outline" color="tertiary" expand="block">Cancel</ion-button>
-      <ion-button (click)="sendMessage()" style="margin-top: 10px" color="success" expand="block">Confirm</ion-button>
+      <ion-button [disabled]="messageText.length <= 5"
+                  (click)="sendMessage()" style="margin-top: 10px" color="success"
+                  expand="block">Confirm</ion-button>
     </section>
 </ion-content>

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../model/user';
-import {Message} from '../../model/message';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UsersService} from '../../services/users.service';
 import {LoadingController} from '@ionic/angular';
+import {MessageService} from '../../services/message.service';
 
 @Component({
   selector: 'app-message',
@@ -14,12 +14,13 @@ export class MessageComponent implements OnInit {
 
   user: User = new User();
   recipient: number;
-  message: Message;
+  messageText = '';
 
   constructor(private activatedRoute: ActivatedRoute,
               private userService: UsersService,
               private router: Router,
-              private loadingController: LoadingController) {
+              private loadingController: LoadingController,
+              private messageService: MessageService) {
   }
 
   ngOnInit() {
@@ -38,6 +39,7 @@ export class MessageComponent implements OnInit {
 
   ionViewDidLeave() {
     this.user = new User();
+    this.messageText = '';
   }
 
   async presentLoading() {
@@ -54,6 +56,14 @@ export class MessageComponent implements OnInit {
   }
 
   sendMessage() {
+    this.recipient ?
+      this.messageService.sendMessageToUser(this.recipient, this.messageText).subscribe(() =>
+        this.redirectToUsers()) :
+      this.messageService.sendMessageToAllUsers(this.messageText).subscribe(() =>
+        this.redirectToUsers());
+  }
 
+  navigateBack() {
+    this.router.navigate(['console/users']);
   }
 }

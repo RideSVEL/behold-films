@@ -19,10 +19,11 @@ export class UserItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  async presentPopover(ev: any) {
+  async presentPopover(ev: any, user: User) {
     const popover = await this.popoverController.create({
       component: UserPopoverItemComponent,
       cssClass: 'my-custom-class',
+      componentProps: {user},
       event: ev,
       translucent: true
     });
@@ -47,6 +48,7 @@ export class UserItemComponent implements OnInit {
 
 
   showUserActions() {
-    this.router.navigate(['console/message/sending'], { queryParams: { recipient: this.user.userId } }).then();
+    this.router.navigate(['console/message/sending'],
+      { queryParams: { recipient: this.user.userId } }).then();
   }
 }
